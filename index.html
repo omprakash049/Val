@@ -3,82 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <title>My Valentine 💖</title>
-
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    color: white;
-    text-align: center;
-}
-
-.card {
-    background: rgba(255,255,255,0.2);
-    padding: 35px;
-    border-radius: 25px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    max-width: 360px;
-    z-index: 2;
-}
-
-h1 { font-size: 32px; }
-p { font-size: 18px; }
-
-button {
-    padding: 14px 28px;
-    font-size: 18px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#mainBtn { background: #ff3366; color: white; }
-#yes { background: #00e676; color: #004d40; }
-#no { background: #ff1744; color: white; position: relative; }
-
-.buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.heart {
-    position: fixed;
-    bottom: -20px;
-    font-size: 28px;
-    animation: float 5s linear forwards;
-}
-
-@keyframes float {
-    to { transform: translateY(-110vh); opacity: 0; }
-}
-
-.confetti {
-    position: fixed;
-    top: -10px;
-    width: 10px;
-    height: 10px;
-    animation: fall 4s linear forwards;
-}
-
-@keyframes fall {
-    to { transform: translateY(110vh); }
-}
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        font-family: 'Segoe UI', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        color: white;
+        text-align: center;
+    }
+    .card {
+        background: rgba(255,255,255,0.15);
+        padding: 35px;
+        border-radius: 25px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        max-width: 350px;
+        z-index: 2;
+        transition: all 0.5s ease;
+    }
+    h1 { font-size: 34px; }
+    p { font-size: 20px; margin-bottom: 25px; }
+    button {
+        padding: 14px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    #mainBtn { background: #ff3366; color: white; }
+    #yes { background: #00e676; color: #004d40; }
+    #no { background: #ff1744; color: white; position: relative; }
+    .buttons { display: flex; gap: 20px; justify-content: center; }
+    .heart, .confetti {
+        position: fixed;
+        font-size: 28px;
+        animation: float 5s linear forwards;
+        pointer-events: none;
+    }
+    .confetti { width: 10px; height: 10px; border-radius: 50%; }
+    @keyframes float { to { transform: translateY(-110vh); opacity: 0; } }
 </style>
 </head>
-
 <body>
 
-<!-- 🎵 Romantic Guitar Music (Direct Working Link) -->
-<audio id="music" preload="auto" playsinline>
-  <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_5c30c8a4c1.mp3" type="audio/mpeg">
+<!-- Romantic Guitar Music -->
+<audio id="music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
 </audio>
 
 <div class="card" id="card">
@@ -91,6 +66,7 @@ button {
 function showProposal() {
     document.getElementById("card").innerHTML = `
         <h1>Will You Be My Valentine? 💘</h1>
+        <p>You make my world brighter every day ✨</p>
         <div class="buttons">
             <button id="yes" onclick="sayYes()">YES 💖</button>
             <button id="no" onmouseover="moveNo()">NO 🙈</button>
@@ -101,30 +77,14 @@ function showProposal() {
 function sayYes() {
     document.getElementById("card").innerHTML = `
         <h1>Yayyy!! 😍💍</h1>
-        <p>
-        From this moment, my heart is yours 💖<br>
-        Every smile of mine begins with you 😘
-        </p>
-        <p>Happy Valentine’s Day 💕</p>
-
-        <button onclick="playMusic()">▶ Play Our Love Music 🎶</button>
+        <h2>From the moment we met, you’ve filled my life with love and laughter. Every day with you feels special, and I can’t imagine my world without you. You are my forever Valentine💕</h2>
+        <h1>Happy Valentine’s Day ❤️</h1>
     `;
+    // 🎵 Play romantic guitar music
+    document.getElementById("music").play();
 
-    hearts();
-    confetti();
-}
-
-function playMusic() {
-    const music = document.getElementById("music");
-    music.muted = false;
-    music.volume = 1;
-    music.play().catch(() => {
-        alert("Tap again & increase volume ❤️");
-    });
-}
-
-function hearts() {
-    for (let i = 0; i < 30; i++) {
+    // ❤️ Floating hearts
+    setInterval(() => {
         let heart = document.createElement("div");
         heart.className = "heart";
         heart.innerText = "❤️";
@@ -132,21 +92,19 @@ function hearts() {
         heart.style.animationDuration = (3 + Math.random() * 3) + "s";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 6000);
-    }
-}
+    }, 300);
 
-function confetti() {
-    for (let i = 0; i < 40; i++) {
-        let c = document.createElement("div");
-        c.className = "confetti";
-        c.style.left = Math.random() * 100 + "vw";
-        c.style.background =
-            ["#ff1744", "#fff", "#ffeb3b", "#ff4081"]
-            [Math.floor(Math.random() * 4)];
-        c.style.animationDuration = (3 + Math.random() * 2) + "s";
-        document.body.appendChild(c);
-        setTimeout(() => c.remove(), 5000);
-    }
+    // 🎉 Confetti
+    setInterval(() => {
+        let confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background =
+            ["#ff1744", "#fff", "#ffeb3b", "#ff4081"][Math.floor(Math.random() * 4)];
+        confetti.style.animationDuration = (3 + Math.random() * 2) + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    }, 200);
 }
 
 function moveNo() {
@@ -156,6 +114,5 @@ function moveNo() {
     noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 </script>
-
 </body>
 </html>
